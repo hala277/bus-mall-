@@ -9,6 +9,11 @@ let busImg = ['bag.jpg','banana.jpg','bathroom.jpg','boots.jpg','breakfast.jpg',
 let maxAttempts = 25; // its shold be 25
 let attempt = 1;
 let busMall = [];
+let prodName = [];
+let votes = [];
+let views = [];
+
+
 
 function BusMall(productName){
     this.prodName = productName.split('.')[0];
@@ -16,7 +21,10 @@ function BusMall(productName){
     this.views = 0;
     this.votes = 0;
     busMall.push(this);
+    prodName.push(this.prodName);
 }
+
+
 
  console.log(BusMall);
 
@@ -24,8 +32,13 @@ for(let i =0 ; i < busImg.length; i++ ){
     new BusMall(busImg[i]);
 }
  console.log(busMall);
+
+ let index = 0;
+ let array =[];
 function randomImg(){
-    return Math.floor(Math.random()*busMall.length);
+   
+ return Math.floor(Math.random()*busMall.length); 
+ 
 
 }
 
@@ -38,10 +51,24 @@ leftIndex = randomImg();
 meddleIndex = randomImg();
 rightIndex = randomImg();
 
-while(leftIndex === rightIndex || rightIndex === meddleIndex || meddleIndex === leftIndex){
+
+
+// if(leftIndex === rightIndex || rightIndex === meddleIndex || meddleIndex === leftIndex || array.includes(leftIndex) || array.includes(meddleIndex)|| array.includes(rightIndex)){
+//     leftIndex = randomImg();
+//     meddleIndex = randomImg();
+//     rightIndex = randomImg();
+// }
+
+while(leftIndex === rightIndex || rightIndex === meddleIndex || meddleIndex === leftIndex || array.includes(leftIndex) || array.includes(meddleIndex)|| array.includes(rightIndex)){
     leftIndex = randomImg();
     meddleIndex = randomImg();
+    rightIndex = randomImg();
+   //|| array.includes(leftIndex) || array.includes(meddleIndex)|| array.includes(rightIndex)
 }
+
+array[0] = leftIndex;
+array[1] = meddleIndex;
+array[2] = rightIndex;
 
 leftImg.setAttribute('src',busMall[leftIndex].imgPath);
 middleImg.setAttribute('src',busMall[meddleIndex].imgPath);
@@ -80,17 +107,7 @@ function clickHandler(event){
      attempt++;
  }
  //result shold add to a button
-    // else{
-    //     for (let i = 0 ; i < busMall.length ;i++){
-    //         let liE = document.createElement('li');
-    //         results.appendChild(liE);
-    //         liE.textContent = `product Name ${busMall[i].prodName} has ${busMall[i].votes} votes and ${busMall[i].views} views`;
-
-    //     }
-    //     leftImg.removeEventListener('click',clickHandler);
-    //     middleImg.removeEventListener('click',clickHandler);
-    //     rightImg.removeEventListener('click',clickHandler);
-    // }
+   
 }
 let buttonE = document.getElementById('buttonresults');
 buttonE.addEventListener('click',showresult);
@@ -99,12 +116,53 @@ function showresult(){
         let liE = document.createElement('li');
         results.appendChild(liE);
         liE.textContent = `product Name:  ${busMall[i].prodName} has   ,  ${busMall[i].votes} : votes    , ${busMall[i].views}: views`;
+        
+        votes.push(busMall[i].votes);
+        views.push(busMall[i].views);
 
     }
     leftImg.removeEventListener('click',clickHandler);
     middleImg.removeEventListener('click',clickHandler);
     rightImg.removeEventListener('click',clickHandler);
     buttonE.removeEventListener('click',showresult)
+    chartRender();
 
 }
 
+function chartRender() {
+     let ctx = document.getElementById('myChart').getContext('2d');
+    let myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: prodName,
+            datasets: [{
+                label: '# of Votes',
+                data: votes,
+                backgroundColor: [
+                    'rgba(255, 99, 135, 3)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }, {
+                label: '# of views',
+                data: views,
+                backgroundColor: [
+                    'rgba(54, 162, 235, 3)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
