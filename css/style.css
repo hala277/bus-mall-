@@ -56,13 +56,13 @@
     font-size: large;
     padding-bottom: 5px;
     padding-top: 70px;
-    border: 5px solid #86c4ec; 
-    background-color: #86c4ec; 
+    border: 5px solid rgb(5, 70, 92);
+    background-color: rgb(5, 70, 92);
     color: white;
     border-radius: 25px;
     width: 150px;
     text-align: center;
-    padding-top: 20px;
+    padding-top: 15px;
   }
 
   ul{
@@ -78,9 +78,15 @@
     padding-top: 5px;
   }
 
-  footer{
+  /* canvas{
+
+    width:1000px !important;
+    height:1000px !important;
+  
+  } */
+  /* footer{
       margin-top: 600px;
       background-color:rgb(5, 70, 92); 
       height: 100px;
       width: auto;
-  }
+  } */
