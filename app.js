@@ -105,29 +105,40 @@ function clickHandler(event){
      renderImg();
     //  console.log(busMall);
      attempt++;
+
+     if (attempt == 25){
+        chartRender();
+        let buttonE = document.getElementById('buttonresults');
+        buttonE.addEventListener('click',showresult);
+
+        }
  }
  //result shold add to a button
    
 }
-let buttonE = document.getElementById('buttonresults');
-buttonE.addEventListener('click',showresult);
+
 function showresult(){
+   
+   
     for (let i = 0 ; i < busMall.length ;i++){
+      
         let liE = document.createElement('li');
         results.appendChild(liE);
         liE.textContent = `product Name:  ${busMall[i].prodName} has   ,  ${busMall[i].votes} : votes    , ${busMall[i].views}: views`;
         
         votes.push(busMall[i].votes);
         views.push(busMall[i].views);
-
+        
     }
+
     leftImg.removeEventListener('click',clickHandler);
     middleImg.removeEventListener('click',clickHandler);
     rightImg.removeEventListener('click',clickHandler);
     buttonE.removeEventListener('click',showresult)
-    chartRender();
-
 }
+   
+
+
 
 function chartRender() {
      let ctx = document.getElementById('myChart').getContext('2d');
