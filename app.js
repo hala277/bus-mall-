@@ -14,7 +14,25 @@ let votes = [];
 let views = [];
 
 
+for(let i =0 ; i < busImg.length; i++ ){
+    new BusMall(busImg[i]);
+}
 
+function saveLocal(){
+    // this function will save to Local storage
+    let data = JSON.stringify(busMall);
+    localStorage.setItem('BusMall',data);
+}
+
+function readLocalStorage(){
+    let stringobj = localStorage.getItem('BusMall');
+    let normalobj = JSON.parse(stringobj);
+
+    if(normalobj){
+        busMall = normalobj; 
+    }
+}
+readLocalStorage();
 function BusMall(productName){
     this.prodName = productName.split('.')[0];
     this.imgPath = `img/${productName}`;
@@ -28,9 +46,7 @@ function BusMall(productName){
 
  console.log(BusMall);
 
-for(let i =0 ; i < busImg.length; i++ ){
-    new BusMall(busImg[i]);
-}
+
  console.log(busMall);
 
  let index = 0;
@@ -103,7 +119,9 @@ function clickHandler(event){
         busMall[rightIndex].votes++;
      }
      renderImg();
-    //  console.log(busMall);
+     saveLocal();
+     
+     console.log(busMall);
      attempt++;
 
      if (attempt == 25){
